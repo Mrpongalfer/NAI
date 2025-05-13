@@ -1,0 +1,11 @@
+# requirements.txt
+textual==0.60.0
+python-dotenv>=1.0.0
+ruff
+mypy
+pip-audit
+pytest
+requests
+PyYAML>=6.0
+tomli # For Python < 3.11 tomllib compatibility
+httpx # Scribe also uses this

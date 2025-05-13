@@ -1,0 +1,59 @@
+[project]
+name = "quantum-orchestrator" # Assumed name, check setup.py if different
+version = "0.1.0" # From original
+description = "Quantum Orchestrator - Neural Flow Pipeline with Cognitive Fusion Core" # From setup.py warning
+readme = "README.md" # Assuming a README.md exists in the project root
+requires-python = ">=3.11"
+license = { text = "MIT License" } # Assuming MIT based on classifiers
+authors = [
+    { name = "AI Developer", email = "your-email@example.com" }, # Placeholder email
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11", # Keep specific versions if needed
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "email-validator>=2.2.0",
+    "flask-login>=0.6.3",
+    "flask>=3.1.0",
+    "flask-sqlalchemy>=3.1.1",
+    "gunicorn>=23.0.0",
+    "psycopg2-binary>=2.9.10",
+    "flask-wtf>=1.2.2",
+    "jsonschema>=4.23.0",
+    "requests>=2.32.3",
+    "flask-cors>=5.0.1",
+    "watchdog>=6.0.0",
+    "numpy>=2.2.5",
+    "pydantic",
+    "pydantic-settings>=2.0.0",
+]
+
+# Define project URLs if applicable (e.g., homepage, repository)
+# [project.urls]
+# Homepage = "https://example.com"
+# Repository = "https://github.com/Mrpongalfer/quantum-orchestrator" # Example
+
+# Define entry points / console scripts
+[project.scripts]
+qorchestrator = "quantum_orchestrator.main:main"
+qorchestrator-api = "quantum_orchestrator.run_api:main"
+
+# Minimal build system requirement (if setup.py is kept minimal or removed)
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+# Optional: Add tool-specific configurations if needed
+# [tool.poetry]
+# ... (If using poetry as the build backend)
+
+# [tool.ruff]
+# ...
+
+# [tool.black]
+# ...

@@ -1,0 +1,709 @@
+/* style.css - NexusOS Rebel Glitch v2.7 :: Max Karnage Kandy Edition */
+/* Harley Quinn's Masterpiece, with Core Team Functionality & TPC */
+
+/* --- Base & Theming Variables --- */
+:root {
+    /* Default Dark Theme: Glitch Core Industrial Punk - Max Karnage Kandy */
+    --theme-bg-root-dark: #08050F; /* Deep void, almost black purple */
+    --theme-bg-desktop-dark: #0D0A1A; /* Slightly lighter for desktop surface */
+    --theme-bg-window-dark: #100C1F; /* Window background - dark velvety purple */
+    --theme-bg-window-alt-dark: #1A142B; /* Slightly lighter for elements within windows */
+    --theme-bg-titlebar-dark: #1F1A38; /* Title bar background - deep indigo */
+    --theme-text-primary-dark: #E8E0FF; /* Soft lavender-white for body */
+    --theme-text-secondary-dark: #A090D0; /* Muted lavender for less emphasis */
+    --theme-text-headings-dark: #F0E8FF; /* Brighter lavender for headings */
+    --theme-text-code-dark: #D8CCF5; /* Lighter for code readability */
+    --theme-accent-primary-dark: #FF00FF;   /* Electric Magenta/Punk Pink - DOMINANT */
+    --theme-accent-secondary-dark: #39FF14; /* Toxic Slime Green - Secondary */
+    --theme-accent-tertiary-dark: #00FFFF;  /* Glitch Cyan - Tertiary / Highlights */
+    --theme-accent-warning-dark: #FFEE00;   /* Warning Yellow */
+    --theme-border-light-dark: #4A3D7A;     /* Muted purple for subtle borders */
+    --theme-border-medium-dark: #6A5A9A;    /* Slightly brighter border */
+    --theme-border-heavy-dark: var(--theme-accent-primary-dark); /* Accent border for active/focus */
+    --theme-scrollbar-thumb-dark: var(--theme-accent-secondary-dark);
+    --theme-scrollbar-track-dark: var(--theme-bg-window-alt-dark);
+    --theme-icon-filter-dark: none; 
+    --theme-glow-primary-dark: rgba(255, 0, 255, 0.7);
+    --theme-glow-secondary-dark: rgba(57, 255, 20, 0.6);
+    --theme-glow-tertiary-dark: rgba(0, 255, 255, 0.5);
+    --theme-success-text-dark: #7FFF00; /* Chartreuse Green */
+    --theme-error-text-dark: #FF4500; /* OrangeRed */
+    --theme-warning-text-dark: var(--theme-accent-warning-dark);
+
+    /* Harley's Synapse Flare Theme (Light Mode) Override Variables */
+    --theme-bg-root-flare: #FCFAFF;
+    --theme-bg-desktop-flare: #FFFFFF;
+    --theme-bg-window-flare: #F6F2FA; /* Very light lavender */
+    --theme-bg-window-alt-flare: #EAE4F0;
+    --theme-bg-titlebar-flare: #DFD4E8;
+    --theme-text-primary-flare: #180D2B; /* Dark Purple for text */
+    --theme-text-secondary-flare: #402F70;
+    --theme-text-headings-flare: #0A050F;
+    --theme-text-code-flare: #281F40;
+    --theme-accent-primary-flare: #E91E63;  /* Energetic Pink */
+    --theme-accent-secondary-flare: #009688; /* Teal */
+    --theme-accent-tertiary-flare: #FF9800; /* Orange */
+    --theme-accent-warning-flare: #F44336;  /* Red */
+    --theme-border-light-flare: #D0C0E0;
+    --theme-border-medium-flare: #B0A0D0;
+    --theme-border-heavy-flare: var(--theme-accent-primary-flare);
+    --theme-scrollbar-thumb-flare: var(--theme-accent-secondary-flare);
+    --theme-scrollbar-track-flare: var(--theme-bg-window-alt-flare);
+    --theme-icon-filter-flare: brightness(0.2) sepia(0.3) hue-rotate(270deg) saturate(5); /* Make icons dark purple/pinkish for light mode */
+    --theme-glow-primary-flare: rgba(233, 30, 99, 0.6);
+    --theme-glow-secondary-flare: rgba(0, 150, 136, 0.5);
+    --theme-success-text-flare: #2E7D32;
+    --theme-error-text-flare: #C62F2F;
+    --theme-warning-text-flare: var(--theme-accent-warning-flare);
+
+    /* Assign default theme variables using CSS custom properties for easy JS toggle */
+    --bg-root: var(--theme-bg-root-dark);
+    --bg-desktop: var(--theme-bg-desktop-dark);
+    --bg-window: var(--theme-bg-window-dark);
+    --bg-window-alt: var(--theme-bg-window-alt-dark);
+    --bg-titlebar: var(--theme-bg-titlebar-dark);
+    --text-primary: var(--theme-text-primary-dark);
+    --text-secondary: var(--theme-text-secondary-dark);
+    --text-headings: var(--theme-text-headings-dark);
+    --text-code: var(--theme-text-code-dark);
+    --accent-primary: var(--theme-accent-primary-dark);
+    --accent-secondary: var(--theme-accent-secondary-dark);
+    --accent-tertiary: var(--theme-accent-tertiary-dark);
+    --accent-warning: var(--theme-accent-warning-dark);
+    --border-light: var(--theme-border-light-dark);
+    --border-medium: var(--theme-border-medium-dark);
+    --border-heavy: var(--theme-border-heavy-dark);
+    --scrollbar-thumb: var(--theme-scrollbar-thumb-dark);
+    --scrollbar-track: var(--theme-scrollbar-track-dark);
+    --icon-filter: var(--theme-icon-filter-dark);
+    --glow-primary: var(--theme-glow-primary-dark);
+    --glow-secondary: var(--theme-glow-secondary-dark);
+    --glow-tertiary: var(--theme-glow-tertiary-dark);
+    --success-text: var(--theme-success-text-dark);
+    --error-text: var(--theme-error-text-dark);
+    --warning-text: var(--theme-warning-text-dark);
+
+    /* Font Stacks */
+    --font-pixel: "Press Start 2P", "VT323", monospace;
+    --font-mono: "Roboto Mono", "Source Code Pro", monospace;
+    --font-sans-fallback: "Arial", sans-serif;
+
+    /* Transitions */
+    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-medium: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-glitchy: all 0.05s step-start;
+
+    /* Glitch Animation Variables (Harley) */
+    --glitch-skew: 3deg;
+    --glitch-translate: 2px;
+}
+
+/* --- Global Resets & Base Styles --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html {
+    font-size: 16px; 
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+html::-webkit-scrollbar { width: 10px; height: 10px; }
+html::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+html::-webkit-scrollbar-thumb { background-color: var(--scrollbar-thumb); border-radius: 10px; border: 2px solid var(--scrollbar-track); }
+html::-webkit-scrollbar-thumb:hover { background-color: color-mix(in srgb, var(--scrollbar-thumb) 80%, white); }
+
+body#nexus-body {
+    font-family: var(--font-mono);
+    background-color: var(--bg-root);
+    color: var(--text-primary);
+    line-height: 1.7;
+    font-weight: 400;
+    overflow: hidden; /* CRITICAL for desktop metaphor */
+    height: 100vh; width: 100vw;
+    display: flex; flex-direction: column;
+    transition: var(--transition-medium);
+    transition-property: background-color, color;
+    user-select: none; /* Prevent text selection on desktop elements */
+}
+
+/* Synapse Flare (Light Mode) Theme Activation */
+body#nexus-body.synapse-flare-active {
+    --bg-root: var(--theme-bg-root-flare);
+    --bg-desktop: var(--theme-bg-desktop-flare);
+    --bg-window: var(--theme-bg-window-flare);
+    --bg-window-alt: var(--theme-bg-window-alt-flare);
+    --bg-titlebar: var(--theme-bg-titlebar-flare);
+    --text-primary: var(--theme-text-primary-flare);
+    --text-secondary: var(--theme-text-secondary-flare);
+    --text-headings: var(--theme-text-headings-flare);
+    --text-code: var(--theme-text-code-flare);
+    --accent-primary: var(--theme-accent-primary-flare);
+    --accent-secondary: var(--theme-accent-secondary-flare);
+    --accent-tertiary: var(--theme-accent-tertiary-flare);
+    --accent-warning: var(--theme-accent-warning-flare);
+    --border-light: var(--theme-border-light-flare);
+    --border-medium: var(--theme-border-medium-flare);
+    --border-heavy: var(--theme-border-heavy-flare);
+    --scrollbar-thumb: var(--theme-scrollbar-thumb-flare);
+    --scrollbar-track: var(--theme-scrollbar-track-flare);
+    --icon-filter: var(--theme-icon-filter-flare);
+    --glow-primary: var(--theme-glow-primary-flare);
+    --glow-secondary: var(--theme-glow-secondary-flare);
+    --success-text: var(--theme-success-text-flare);
+    --error-text: var(--theme-error-text-flare);
+    --warning-text: var(--theme-warning-text-flare);
+}
+
+/* --- Background Canvas & Effects --- */
+#nexus-background-canvas {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -10; overflow: hidden;
+    transition: opacity 0.5s ease;
+    background-color: var(--bg-desktop); /* Fallback if canvas fails */
+}
+body.synapse-flare-active #nexus-background-canvas { opacity: 0.3; }
+
+/* Subtle Scanline Overlay (Harley) */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        transparent,
+        transparent 2px,
+        color-mix(in srgb, var(--bg-window-alt) 5%, transparent) 2.5px,
+        color-mix(in srgb, var(--bg-window-alt) 5%, transparent) 3px
+    );
+    opacity: 0.05; /* Very subtle */
+    z-index: -9;
+    animation: scanlineMove 60s linear infinite;
+}
+@keyframes scanlineMove {
+    0% { background-position-y: 0; }
+    100% { background-position-y: 100px; } /* Speed of scanline movement */
+}
+body.synapse-flare-active::after { opacity: 0.03; }
+
+
+/* --- Power's Dominance Level Indicator --- */
+#dominance-indicator-bar {
+    position: fixed; top: 0; left: 0; width: 0%; height: 7px; /* Thicker, more dominant */
+    background: linear-gradient(90deg, 
+        var(--accent-primary) 0%, 
+        var(--accent-secondary) 50%, 
+        var(--accent-tertiary) 100%);
+    z-index: 3000; /* Highest visual layer */
+    transition: width 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6); /* Aggressive ease */
+    box-shadow: 0 0 15px var(--glow-primary), 0 0 8px var(--glow-secondary), 0 0 20px var(--glow-tertiary), 0 0 5px #fff inset;
+    border-bottom: 1px solid color-mix(in srgb, var(--border-heavy) 50%, black);
+}
+#dominance-level-text-container {
+    position: fixed; top: 10px; right: 15px; z-index: 3001;
+    font-family: var(--font-pixel); font-size: 0.75rem;
+    color: var(--text-headings);
+    background-color: color-mix(in srgb, var(--bg-dark) 85%, transparent);
+    padding: 4px 10px; border-radius: 4px;
+    text-shadow: 0 0 5px black; letter-spacing: 1.5px;
+    border: 1px solid var(--border-medium);
+}
+#dominance-level-text { font-weight: bold; color: var(--accent-tertiary); animation: dominanceTextPulse 1.5s infinite alternate; }
+@keyframes dominanceTextPulse {
+    from { text-shadow: 0 0 5px var(--glow-tertiary); }
+    to { text-shadow: 0 0 15px var(--glow-tertiary), 0 0 5px #fff; }
+}
+
+
+/* --- Desktop Area --- */
+#desktop {
+    flex-grow: 1; position: relative; overflow: hidden;
+    padding: 20px; /* Increased padding */
+    display: flex; flex-wrap: wrap; align-content: flex-start;
+    gap: 20px; /* Spacing between icons */
+}
+
+.desktop-icon {
+    width: 85px; height: 105px; /* Slightly larger */
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start; /* Content top aligned */
+    text-align: center; padding: 8px 5px; cursor: pointer;
+    transition: var(--transition-fast); transition-property: transform, background-color, box-shadow;
+    border-radius: 6px;
+    position: absolute; /* JS will manage top/left for draggable icons */
+    background-color: color-mix(in srgb, var(--bg-window-alt) 30%, transparent); /* Subtle bg for icons */
+    border: 1px solid transparent; /* For hover effect */
+}
+.desktop-icon:hover {
+    background-color: color-mix(in srgb, var(--accent-primary) 25%, transparent);
+    transform: scale(1.08);
+    box-shadow: 0 0 18px var(--glow-primary);
+    border-color: var(--accent-primary);
+}
+.desktop-icon img {
+    width: 52px; height: 52px; margin-bottom: 8px;
+    pointer-events: none;
+    filter: var(--icon-filter) drop-shadow(0 1px 2px rgba(0,0,0,0.7));
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.desktop-icon:hover img {
+    animation: iconHoverWobble 0.5s ease-in-out;
+}
+@keyframes iconHoverWobble {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-5deg) scale(1.05); }
+  75% { transform: rotate(5deg) scale(1.05); }
+}
+.desktop-icon span.icon-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem; font-weight: 500;
+    color: var(--text-primary);
+    word-wrap: break-word; max-width: 100%;
+    line-height: 1.25;
+    text-shadow: 1px 1px 2px var(--bg-dark);
+    padding: 2px 4px;
+    background-color: color-mix(in srgb, var(--bg-dark) 50%, transparent);
+    border-radius: 2px;
+}
+
+/* --- Taskbar --- */
+#taskbar {
+    height: 48px; /* Slightly taller */
+    background-color: color-mix(in srgb, var(--bg-titlebar) 90%, transparent);
+    border-top: 2px solid var(--border-heavy); /* More prominent border */
+    display: flex; align-items: center;
+    padding: 0 10px; z-index: 10000; /* Above windows that aren't max_z */
+    box-shadow: 0 -3px 15px rgba(0,0,0,0.4);
+    transition: var(--transition-medium);
+    transition-property: background-color, border-top-color;
+}
+#start-button {
+    padding: 6px 12px; cursor: pointer; display: flex; align-items: center;
+    border-right: 1px solid var(--border-light); margin-right: 10px;
+    transition: var(--transition-fast);
+    border-radius: 3px 0 0 3px;
+}
+#start-button:hover {
+    background-color: var(--accent-primary);
+    box-shadow: 0 0 10px var(--glow-primary);
+}
+#start-button:hover #start-button-text { color: var(--bg-dark); }
+#start-button:hover #start-button-icon { filter: brightness(0) invert(1); transform: rotate(360deg) scale(1.2); transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);}
+#start-button-icon {
+    width: 28px; height: 28px; margin-right: 10px;
+    filter: var(--icon-filter);
+    transition: filter 0.3s, transform 0.5s;
+}
+#start-button-text {
+    font-family: var(--font-pixel); font-size: 1rem;
+    color: var(--text-headings); letter-spacing: 1.5px;
+    text-shadow: 0 0 3px var(--glow-primary);
+}
+#running-apps-icons-container {
+    flex-grow: 1; display: flex; align-items: center; gap: 6px;
+    overflow-x: auto; padding: 5px 0;
+}
+.taskbar-app-icon {
+    background-color: var(--bg-window-alt);
+    border: 1px solid var(--border-light);
+    padding: 5px 10px; border-radius: 4px; cursor: pointer;
+    font-size: 0.8rem; display: flex; align-items: center; gap: 6px;
+    transition: var(--transition-fast);
+    box-shadow: inset 0 1px 1px color-mix(in srgb, var(--border-light) 50%, transparent);
+}
+.taskbar-app-icon:hover {
+    background-color: var(--accent-secondary); color: var(--bg-dark);
+    border-color: var(--accent-secondary);
+    box-shadow: 0 0 8px var(--glow-secondary);
+}
+.taskbar-app-icon.active-app {
+    background-color: var(--accent-primary); color: var(--bg-dark);
+    font-weight: bold; border-color: var(--accent-primary);
+    box-shadow: 0 0 10px var(--glow-primary), inset 0 0 5px color-mix(in srgb, black 20%, transparent);
+}
+.taskbar-app-icon img { width: 18px; height: 18px; filter: var(--icon-filter); }
+
+#system-tray { display: flex; align-items: center; gap: 18px; padding-right: 8px; }
+#desktop-clock { font-size: 0.9rem; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.tray-icon {
+    font-size: 1.6em; color: var(--accent-tertiary); cursor: pointer;
+    transition: var(--transition-fast); transition-property: color, transform, text-shadow;
+}
+.tray-icon:hover { color: var(--accent-primary); transform: scale(1.25) rotate(10deg); text-shadow: 0 0 12px var(--glow-primary); }
+#rick-console-hijack-indicator { font-size: 1.2em; cursor: help; opacity: 0.6; }
+#rick-console-hijack-indicator.active { color: var(--accent-secondary); opacity: 1; animation: rickPulseIcon 1s infinite; }
+@keyframes rickPulseIcon { 0%, 100% { transform: scale(1) rotate(0); } 25% {transform: scale(1.2) rotate(-5deg);} 50% { transform: scale(1.1) rotate(5deg); } 75% {transform: scale(1.2) rotate(-2deg);} }
+
+/* --- Start Menu --- */
+#start-menu {
+    position: fixed; bottom: 48px; /* Above taskbar */ left: 0;
+    width: 320px; max-height: 60vh; /* More height */
+    background-color: color-mix(in srgb, var(--bg-window) 97%, transparent);
+    border: 2px solid var(--border-heavy); border-bottom: none;
+    border-top-right-radius: 10px; border-top-left-radius: 10px;
+    box-shadow: 0 -8px 25px rgba(0,0,0,0.4);
+    z-index: 13000; /* High, but below active modal overlays */
+    display: flex; flex-direction: column;
+    backdrop-filter: blur(12px) saturate(160%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease-out; /* Smoother, bouncier */
+    transform: translateY(100%); opacity: 0;
+}
+#start-menu.visible { transform: translateY(0%); opacity: 1; }
+.start-menu-header {
+    padding: 15px 20px; font-family: var(--font-pixel); font-size: 1.1rem;
+    color: var(--accent-primary); border-bottom: 1px solid var(--border-medium);
+    text-align: center; letter-spacing: 1.5px; text-shadow: 0 0 5px var(--glow-primary);
+}
+.start-menu-content { flex-grow: 1; overflow-y: auto; padding: 5px; }
+.start-menu-section { margin-bottom: 5px; }
+.start-menu-section-title {
+    padding: 10px 15px; font-size: 0.75rem; font-weight: bold;
+    text-transform: uppercase; color: var(--text-secondary);
+    background-color: color-mix(in srgb, var(--bg-window-alt) 70%, transparent);
+    border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);
+    letter-spacing: 1px;
+}
+#start-menu-items, #start-menu-system-items, #start-menu-core-apps, #start-menu-tools-apps, #start-menu-team-apps, #start-menu-troll-apps {
+    list-style: none; padding: 5px 0;
+}
+.start-menu-item-button {
+    display: flex; align-items: center; gap: 12px; width: 100%;
+    padding: 12px 18px; background: none; border: none;
+    color: var(--text-primary); text-align: left;
+    font-family: var(--font-mono); font-size: 0.95rem; font-weight: 500;
+    cursor: pointer; transition: var(--transition-fast); border-radius: 4px;
+}
+.start-menu-item-button img { width: 22px; height: 22px; filter: var(--icon-filter); transition: transform 0.2s;}
+.start-menu-item-button:hover {
+    background-color: var(--accent-primary); color: var(--bg-dark);
+    box-shadow: 0 0 10px var(--glow-primary);
+}
+.start-menu-item-button:hover img { filter: brightness(0) invert(1); transform: scale(1.1) rotate(5deg); }
+.start-menu-footer {
+    padding: 12px; border-top: 1px solid var(--border-medium);
+    display: flex; justify-content: space-around;
+    background-color: color-mix(in srgb, var(--bg-titlebar) 50%, transparent);
+}
+.start-menu-footer .system-button {
+    width: auto; border: 1px solid var(--border-medium); border-radius: 5px;
+    padding: 8px 12px; font-size: 0.85rem;
+}
+
+
+/* --- App Windows --- */
+.app-window {
+    position: absolute; 
+    min-width: 380px; min-height: 250px;
+    max-width: calc(100vw - 40px); max-height: calc(100vh - 48px - 40px); /* Taskbar height + padding */
+    background-color: var(--bg-window);
+    border: 2px solid var(--border-medium);
+    border-radius: 10px 10px 6px 6px; 
+    box-shadow: 0 12px 35px rgba(0,0,0,0.6), 0 0 0 1px var(--border-light) inset;
+    display: none; /* Initially hidden, JS shows and positions */
+    flex-direction: column;
+    overflow: hidden; 
+    z-index: 1000; /* Base, JS manages active */
+    transition: var(--transition-medium);
+    transition-property: opacity, transform, box-shadow, border-color;
+    animation: cyberpunkWindowOpen 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+@keyframes cyberpunkWindowOpen {
+    from { opacity: 0; transform: scale(0.8) rotateX(-20deg); }
+    to { opacity: 1; transform: scale(1) rotateX(0deg); }
+}
+.app-window.active-window {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 30px var(--glow-primary), 0 0 10px var(--glow-secondary), 0 15px 50px rgba(0,0,0,0.7);
+    z-index: 10000 !important; /* Ensure active window is on top */
+}
+/* Style for when window is being dragged */
+.app-window.is-dragging {
+    opacity: 0.85;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5); /* Larger shadow when dragging */
+    cursor: grabbing !important;
+}
+.app-window.is-dragging .window-content {
+    pointer-events: none; /* Prevent interaction with content while dragging */
+}
+
+
+.window-title-bar {
+    background: linear-gradient(135deg, var(--bg-titlebar), color-mix(in srgb, var(--bg-titlebar) 70%, black));
+    color: var(--text-headings); padding: 8px 12px; cursor: grab;
+    display: flex; align-items: center; border-bottom: 2px solid var(--border-medium);
+    user-select: none; font-family: var(--font-pixel); font-size: 0.9rem;
+    letter-spacing: 1px; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+    position: relative; /* For glitch effects */
+}
+.window-title-bar::before { /* Subtle animated scanline for title bars */
+    content: ""; position: absolute; top:0; left:0; right:0; bottom:0;
+    background: repeating-linear-gradient(transparent, transparent 1px, color-mix(in srgb, var(--accent-tertiary) 10%, transparent) 1.5px, color-mix(in srgb, var(--accent-tertiary) 10%, transparent) 2px);
+    opacity: 0.1; animation: scanlinesTitle 20s linear infinite alternate; pointer-events: none;
+}
+@keyframes scanlinesTitle { 0% { background-position-y: 0; } 100% { background-position-y: 20px; } }
+body.synapse-flare-active .window-title-bar::before { display: none; }
+
+
+.window-title-bar .window-icon {
+    width: 20px; height: 20px; margin-right: 10px;
+    filter: var(--icon-filter) drop-shadow(0 0 3px var(--glow-primary));
+}
+.window-title-bar .title-text { flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.window-controls { display: flex; }
+.window-control-btn {
+    background: transparent; border: 1px solid transparent; 
+    color: var(--text-secondary); font-family: var(--font-mono); font-weight: bold;
+    font-size: 1.2rem; width: 30px; height: 30px; line-height: 28px; text-align: center;
+    cursor: pointer; margin-left: 6px; border-radius: 4px;
+    transition: var(--transition-fast);
+    padding: 0; /* Reset padding */
+}
+.window-control-btn:hover { background-color: var(--accent-secondary); color: var(--bg-dark); transform: scale(1.1); }
+.window-control-btn.minimize:hover { background-color: var(--accent-tertiary); color: var(--bg-dark); }
+.window-control-btn.close:hover { background-color: var(--error-text); color: white; transform: scale(1.1) rotate(90deg); }
+
+.window-content {
+    padding: 18px 22px; flex-grow: 1; overflow-y: auto; overflow-x: hidden;
+    background-color: var(--bg-window);
+    position: relative; /* For content-specific overlays/effects */
+}
+.app-content-title {
+    font-family: var(--font-pixel); color: var(--accent-primary);
+    font-size: 1.4rem; margin-bottom: 22px; text-align: center;
+    border-bottom: 2px solid var(--border-medium); padding-bottom: 12px;
+    letter-spacing: 1.5px; text-shadow: 0 0 8px var(--glow-primary);
+}
+
+.window-resize-handle {
+    position: absolute; bottom: 0; right: 0; width: 18px; height: 18px;
+    cursor: se-resize; opacity: 0.6;
+    background: repeating-linear-gradient( -45deg, 
+        var(--border-medium), var(--border-medium) 2px, 
+        transparent 2px, transparent 4px );
+}
+.window-resize-handle:hover { opacity: 1; }
+
+/* Specific App Styles within Windows (reusing tool-card styles for content) */
+.edicts-cols { display: flex; gap: 18px; height: calc(100% - 40px); } /* Adjust height based on title */
+#edicts-selection-pane-app { width: 40%; border-right: 1px solid var(--border-light); padding-right:12px; }
+#edicts-selection-pane-app h4, #edict-viewer-pane-app h4 { font-family: var(--font-pixel); color: var(--accent-secondary); font-size: 0.9rem; margin-bottom:12px; }
+#edicts-list-app { list-style: none; padding-left: 0; }
+#edicts-list-app li { padding: 7px 10px; cursor: pointer; border-radius: 4px; transition: var(--transition-fast); font-size: 0.88rem; margin-bottom:3px; border:1px solid transparent;}
+#edicts-list-app li:hover { background-color: var(--accent-primary); color: var(--bg-dark); border-color: var(--accent-primary); }
+#edicts-list-app li.selected-edict { background-color: var(--accent-secondary); color: var(--bg-dark); font-weight: bold; border-color: var(--accent-secondary); }
+#edict-viewer-pane-app { flex-grow: 1; }
+#edict-viewer-content-app { white-space: pre-wrap; font-size: 0.9rem; line-height: 1.65; padding:10px; background-color: var(--code-background); border-radius: 4px; color:var(--text-code); }
+
+.project-showcase .project-card-app { /* Styles for project cards inside "The Forge" app window */
+    background-color: var(--bg-window-alt); border: 1px solid var(--border-light);
+    padding: 15px; margin-bottom: 15px; border-radius: 6px;
+    border-left: 4px solid var(--accent-primary);
+}
+.project-showcase .project-card-app .project-header h5 { font-family: var(--font-pixel); font-size:1.1em; color: var(--accent-primary); margin-bottom: 5px;}
+.project-showcase .project-card-app .project-status-app { font-size:0.75em; padding:3px 8px; border-radius:10px; display:inline-block; margin-left:10px; }
+.project-showcase .project-card-app .project-status-app.active { background-color:var(--success-text); color:var(--bg-dark);}
+.project-showcase .project-card-app .project-status-app.dev { background-color:var(--warning-text); color:var(--bg-dark);}
+.project-showcase .project-card-app p { font-size:0.85em; color:var(--text-secondary); margin-bottom:8px;}
+
+.core-team-grid-app { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 10px; }
+.team-member-app-icon { /* For icons inside Core Team App */
+    background-color: var(--bg-window-alt); padding: 10px; text-align: center; border-radius: 6px;
+    border: 1px solid var(--border-light); cursor: pointer; transition: var(--transition-fast); font-size: 0.85rem;
+}
+.team-member-app-icon img {width: 32px; height: 32px; margin-bottom: 5px; filter: var(--icon-filter);}
+.team-member-app-icon:hover { background-color: var(--accent-primary); color: var(--bg-dark); transform: scale(1.05); }
+.team-member-app-icon:hover img { filter: brightness(0) invert(1); }
+
+#terminalApp-content-template { display:flex; flex-direction:column; height:100%; background-color: #030207; }
+#terminal-output-app {
+    flex-grow:1; overflow-y:auto; padding:10px; font-family: var(--font-mono); font-size:0.9em; color: var(--accent-secondary); line-height:1.4;
+}
+#terminal-output-app > div { margin-bottom: 2px; white-space: pre-wrap; word-break: break-all; }
+#terminal-output-app .term-prompt { color: var(--accent-primary); }
+#terminal-output-app .term-command { color: var(--text-primary); }
+#terminal-output-app .term-error { color: var(--error-text); }
+#terminal-output-app .term-success { color: var(--success-text); }
+#terminal-output-app .term-info { color: var(--accent-tertiary); }
+
+#terminal-input-line-app { display:flex; padding:5px 10px; border-top:1px solid var(--border-medium); background-color:var(--bg-titlebar); }
+#terminal-prompt-app { color:var(--accent-primary); margin-right:5px; white-space:nowrap; }
+#terminal-input-app {
+    flex-grow:1; background:transparent; border:none; color:var(--text-primary);
+    font-family: inherit; font-size:inherit; outline:none;
+}
+
+/* Tool specific styles in App Windows */
+#pgpPublicKeyDisplayApp { cursor: text; } /* Allow text selection */
+.pgp-key-area label { margin-bottom: 2px; }
+#pgpInstructionsApp { font-size: 0.8rem; color: var(--text-secondary); margin-top: 10px; border-top: 1px dashed var(--border-light); padding-top: 10px; }
+#pgpInstructionsApp ol { margin-left: 18px; }
+#pgpInstructionsApp strong { color: var(--accent-warning); }
+#pgp-sigil { font-weight: bold; color: var(--accent-tertiary); }
+
+#powerMapContainer {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    width:100%; height:auto; min-height:280px; background:var(--code-background);
+    border:1px solid var(--border-color); padding:15px; border-radius: 8px;
+}
+.map-region-power {
+    background:var(--bg-light); color:var(--text-primary);
+    border:1px solid var(--border-medium); border-radius:6px;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center; font-size:0.9em; cursor:pointer;
+    transition: var(--transition-fast); padding: 10px;
+}
+.map-region-power:hover {
+    background:var(--accent-secondary); color:var(--bg-dark);
+    transform:scale(1.03); box-shadow: 0 0 10px var(--glow-secondary);
+}
+
+#fakeErrorLogOutput {
+    color: var(--error-text); font-size: 0.8rem; line-height: 1.2;
+    background-color: color-mix(in srgb, black 80%, var(--bg-root)) !important;
+}
+#fakeErrorLogOutput span.timestamp { color: var(--accent-tertiary); }
+#fakeErrorLogOutput span.source { color: var(--accent-cyan); }
+
+
+/* --- General Modal Overlay (for BSOD, Konami, etc.) --- */
+.modal-overlay {
+    display: none; position: fixed; z-index: 15000; /* Very high */
+    left: 0; top: 0; width: 100%; height: 100%; 
+    background-color: color-mix(in srgb, var(--bg-root) 90%, transparent);
+    backdrop-filter: blur(10px) brightness(0.4);
+    animation: fadeInModalOverlay 0.3s ease-out forwards;
+    align-items: center; justify-content: center;
+    opacity:0; /* Start hidden for animation */
+}
+.modal-overlay.hidden { display: none !important; }
+.modal-overlay.visible { display: flex !important; opacity:1; }
+
+.general-modal-content { /* Used by generalModalOverlay */
+    background-color: transparent; /* BSOD sets its own bg */
+    padding: 0; border: none; box-shadow: none;
+    width: 100%; height: 100%;
+    max-width: none; max-height: none;
+    border-radius: 0;
+    animation: none; /* Let specific content animate */
+}
+
+.bsod-screen { 
+    background-color: #0000AA; color: #FFFFFF;
+    font-family: 'PerfectDOSVGA', 'Fixedsys', 'Consolas', monospace; 
+    padding: 30px; width: 100%; height: 100%; 
+    display: flex; flex-direction: column; justify-content: center; text-align: center;
+    font-size: 1.6rem; line-height: 1.8;
+    animation: bsodFlicker 0.1s infinite alternate;
+}
+@keyframes bsodFlicker { 0% { opacity: 0.98; } 100% { opacity: 1; } }
+.bsod-screen h2 { color: var(--theme-accent-warning-dark); font-family: inherit; margin-bottom: 30px; font-size:2em; }
+.bsod-screen p { margin-bottom: 20px; }
+.bsod-screen .error-code { font-size: 1.3em; color: var(--theme-accent-tertiary-dark); }
+.bsod-screen .restart-info { font-size: 1rem; margin-top: 30px;}
+
+/* Konami Code Easter Egg Canvas */
+#konami-canvas-overlay { /* Uses .modal-overlay class now for consistency */
+    /* background will be set by .modal-overlay */
+}
+#konami-art-output {
+    color:var(--accent-primary); font-size: clamp(3px, 1.1vw, 7px); line-height:0.8;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre; display: inline-block; text-align: left;
+    border: 4px double var(--accent-secondary); padding: 20px;
+    background-color: color-mix(in srgb, var(--code-background) 90%, transparent);
+    box-shadow: 0 0 40px var(--glow-secondary), 0 0 20px var(--glow-primary) inset;
+    max-width: 95vw; max-height: 75vh; overflow: auto; border-radius: 8px;
+    transform: rotateX(10deg) perspective(500px); animation: konamiArtIntro 1s ease-out;
+}
+@keyframes konamiArtIntro { from{opacity:0; transform:rotateX(90deg) perspective(500px);} to{opacity:1; transform:rotateX(10deg) perspective(500px);} }
+#konami-message-output { color:var(--accent-tertiary); margin-top:25px; font-size:1.5em; font-family: var(--font-pixel); text-shadow: 0 0 12px var(--glow-tertiary); letter-spacing:1px; }
+#close-konami-overlay-btn { margin-top: 30px; }
+
+
+/* Custom Right-Click Context Menu */
+#desktop-context-menu {
+    position: fixed; z-index: 16000; /* Above most things */
+    background-color: var(--bg-window-alt);
+    border: 1px solid var(--border-heavy);
+    border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    padding: 8px 0; min-width: 220px;
+    transition: opacity 0.1s ease-out, transform 0.1s ease-out;
+    transform-origin: top left;
+    transform: scale(0.95); opacity: 0; pointer-events:none; /* Hidden by default */
+}
+#desktop-context-menu.visible { transform: scale(1); opacity: 1; pointer-events:auto; }
+#desktop-context-menu ul { list-style: none; padding: 0; margin: 0; }
+#desktop-context-menu li {
+    padding: 10px 18px; cursor: pointer; font-size: 0.95rem;
+    color: var(--text-primary); transition: var(--transition-fast);
+    display: flex; align-items: center; gap: 10px;
+}
+#desktop-context-menu li img.ctx-icon { width:16px; height:16px; filter: var(--icon-filter); }
+#desktop-context-menu li:hover {
+    background-color: var(--accent-primary); color: var(--bg-dark);
+}
+#desktop-context-menu li:hover img.ctx-icon { filter: brightness(0) invert(1); }
+#desktop-context-menu hr { border: none; height: 1px; background-color: var(--border-light); margin: 6px 0; }
+
+
+/* --- Final Global Glitch & Harley Touches --- */
+.glitch-text-hover { transition: var(--transition-fast); }
+.glitch-text-hover:hover {
+    animation: textGlitch 0.5s infinite alternate;
+    color: var(--accent-secondary) !important; /* Important to override */
+    text-shadow: 0 0 5px var(--glow-secondary) !important;
+}
+@keyframes textGlitch{
+  0%{text-shadow:1px 1px 0 var(--accent-primary), -1px -1px 0 var(--accent-tertiary); transform: translateX(-1px);}
+  25%{text-shadow:-1px 1px 0 var(--accent-primary), 1px -1px 0 var(--accent-tertiary); transform: translateY(-1px) skewX(3deg);}
+  50%{text-shadow:1px -1px 0 var(--accent-primary), -1px 1px 0 var(--accent-tertiary); transform: translateX(1px) skewY(-2deg);}
+  75%{text-shadow:-1px -1px 0 var(--accent-primary), 1px 1px 0 var(--accent-tertiary); transform: translateY(1px);}
+  100%{text-shadow:1px 1px 0 var(--accent-primary), -1px -1px 0 var(--accent-tertiary); transform:skewX(0deg) skewY(0deg);}
+}
+
+.harley-graffiti { /* For Harley's random comment troll */
+    position: absolute;
+    background-color: color-mix(in srgb, var(--accent-secondary) 80%, transparent);
+    color: var(--bg-dark);
+    padding: 5px 10px;
+    border-radius: 20px 20px 20px 5px;
+    font-family: "Comic Sans MS", "Press Start 2P", cursive; /* Harley's touch */
+    font-size: 0.8rem;
+    z-index: 5000;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    transform: rotate(-5deg);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+}
+.harley-graffiti.visible { opacity: 1; transform: rotate(-5deg) scale(1); }
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    html { font-size: 14px; } /* Scale down base font slightly for mobile */
+    #taskbar { height: 44px; padding: 0 5px;}
+    #start-button-icon { width:22px; height:22px; margin-right:6px;}
+    #start-button-text { font-size: 0.85rem;}
+    #desktop-clock { font-size:0.8rem; }
+    .tray-icon { font-size: 1.4em;}
+    #start-menu { width: 260px; bottom: 44px; max-height: 55vh;}
+    .start-menu-item-button { padding: 9px 14px; font-size: 0.9rem;}
+    
+    #desktop { padding: 10px; gap: 10px; }
+    .desktop-icon { width: 75px; height: 95px; }
+    .desktop-icon img { width: 44px; height: 44px; }
+    .desktop-icon span.icon-label { font-size: 0.65rem; }
+
+    #hero h2 { font-size: 2.5em; }
+    .section-title { font-size: 2.1em; margin-bottom: 40px;}
+    .app-content-title { font-size: 1.2rem; }
+
+    .app-window { min-width: calc(100vw - 20px); min-height: 70vh; width: calc(100vw - 20px); height: auto; max-height: calc(100vh - 44px - 20px); top:10px !important; left:10px !important; border-radius: 8px; }
+    .window-title-bar { padding: 7px 10px; font-size: 0.85rem; }
+    .window-title-bar .window-icon { width:18px; height:18px; margin-right:7px;}
+    .window-control-btn { width:26px; height:26px; line-height:26px; font-size:1.1rem;}
+    .window-content { padding: 15px; }
+    
+    .tool-card { padding: 20px; }
+    .tool-card h4 { font-size: 1.35em; }
+
+    #konami-art-output { font-size: clamp(2px, 1vw, 5px); padding: 10px;}
+    #konami-message-output { font-size: 1.2em;}
+}

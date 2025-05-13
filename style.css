@@ -1,0 +1,802 @@
+/* style.css - NexusOS Rebel Glitch v2.7 :: Max Karnage Kandy Edition */
+/* Harley Quinn's Masterpiece, with Core Team Functionality in Mind */
+
+/* --- Base & Theming Variables --- */
+:root {
+    /* Default Dark Theme: Glitch Core Industrial Punk */
+    --theme-bg-root: #0A070F; /* Deep void, almost black purple */
+    --theme-bg-desktop: #0D0A1A; /* Slightly lighter for desktop surface */
+    --theme-bg-window: #100C1F; /* Window background */
+    --theme-bg-window-alt: #18142B; /* Slightly lighter for elements within windows */
+    --theme-bg-titlebar: #1F1A38; /* Title bar background */
+    --theme-text-primary: #E8E0FF; /* Soft lavender-white for body */
+    --theme-text-secondary: #A090D0; /* Muted lavender for less emphasis */
+    --theme-text-headings: #F0E8FF; /* Brighter lavender for headings */
+    --theme-text-code: #D0C8E8;
+    --theme-accent-primary: #FF00FF;   /* Electric Magenta/Punk Pink - DOMINANT ACCENT */
+    --theme-accent-secondary: #39FF14; /* Toxic Slime Green - Secondary */
+    --theme-accent-tertiary: #00FFFF;  /* Glitch Cyan - Tertiary / Highlights */
+    --theme-accent-warning: #FFEE00;   /* Warning Yellow */
+    --theme-border-light: #4A3D7A;     /* Muted purple for subtle borders */
+    --theme-border-medium: #6A5A9A;    /* Slightly brighter border */
+    --theme-border-heavy: var(--theme-accent-primary); /* Accent border for active/focus */
+    --theme-scrollbar-thumb: var(--theme-accent-secondary);
+    --theme-scrollbar-track: var(--theme-bg-window-alt);
+    --theme-icon-filter: none; /* No filter for dark mode icons */
+    --theme-glow-primary: rgba(255, 0, 255, 0.7);
+    --theme-glow-secondary: rgba(57, 255, 20, 0.6);
+    --theme-glow-tertiary: rgba(0, 255, 255, 0.5);
+    --theme-success-text: #6AF2A2;
+    --theme-error-text: #FF5E5E;
+    --theme-warning-text: var(--theme-accent-warning);
+
+    /* Harley's Synapse Flare (Light Mode) Override Variables */
+    --flare-bg-root: #FCFAFF;
+    --flare-bg-desktop: #FFFFFF;
+    --flare-bg-window: #F4F0FA;
+    --flare-bg-window-alt: #E8E0F0;
+    --flare-bg-titlebar: #DCD0E8;
+    --flare-text-primary: #1A0F30;
+    --flare-text-secondary: #3D2F60;
+    --flare-text-headings: #08050F;
+    --flare-text-code: #2A1F48;
+    --flare-accent-primary: #D9006C;  /* Deep Harley Pink */
+    --flare-accent-secondary: #00796B; /* Tealish Green */
+    --flare-accent-tertiary: #FF8F00; /* Amber/Orange */
+    --flare-accent-warning: #D84315;  /* Deep Orange */
+    --flare-border-light: #C0B0E0;
+    --flare-border-medium: #A090C0;
+    --flare-border-heavy: var(--flare-accent-primary);
+    --flare-scrollbar-thumb: var(--flare-accent-secondary);
+    --flare-scrollbar-track: var(--flare-bg-window-alt);
+    --flare-icon-filter: invert(100%); /* Make dark icons visible on light bg */
+    --flare-glow-primary: rgba(217, 0, 108, 0.7);
+    --flare-glow-secondary: rgba(0, 121, 107, 0.6);
+    --flare-success-text: #1B5E20;
+    --flare-error-text: #B71C1C;
+    --flare-warning-text: var(--flare-accent-warning);
+
+    /* Font Stacks */
+    --font-pixel: "Press Start 2P", "VT323", monospace;
+    --font-mono: "Roboto Mono", "Source Code Pro", monospace;
+    --font-sans: "Arial", sans-serif; /* Fallback */
+
+    /* Transitions */
+    --transition-fast: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-medium: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* Dynamic Harley variables set by JS for some trolls */
+    --harley-random-color1: var(--theme-accent-primary);
+    --harley-random-color2: var(--theme-accent-secondary);
+}
+
+/* --- Global Resets & Base Styles --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none; /* Prevent text selection on desktop elements */
+}
+
+html {
+    font-size: 16px; /* Base font size */
+    scrollbar-width: thin;
+    scrollbar-color: var(--theme-scrollbar-thumb) var(--theme-scrollbar-track);
+}
+html::-webkit-scrollbar { width: 10px; height: 10px; }
+html::-webkit-scrollbar-track { background: var(--theme-scrollbar-track); }
+html::-webkit-scrollbar-thumb { background-color: var(--theme-scrollbar-thumb); border-radius: 10px; border: 2px solid var(--theme-scrollbar-track); }
+html::-webkit-scrollbar-thumb:hover { background-color: color-mix(in srgb, var(--theme-scrollbar-thumb) 80%, white); }
+
+
+body#nexus-body {
+    font-family: var(--font-mono);
+    background-color: var(--theme-bg-root);
+    color: var(--theme-text-primary);
+    line-height: 1.65;
+    font-weight: 400;
+    overflow: hidden; /* Critical for desktop metaphor - no body scroll */
+    height: 100vh;
+    width: 100vw;
+    display: flex; /* For centering desktop content if needed, or taskbar placement */
+    flex-direction: column;
+    transition: var(--transition-medium);
+    transition-property: background-color, color;
+}
+
+/* Synapse Flare (Light Mode) Active Theme */
+body#nexus-body.synapse-flare-active {
+    --text-color: var(--flare-text-primary);
+    --primary-accent: var(--flare-accent-primary);
+    --secondary-accent: var(--flare-accent-secondary);
+    --tertiary-accent: var(--flare-accent-tertiary);
+    --background-root: var(--flare-bg-root);
+    --background-dark: var(--flare-bg-dark);
+    --background-medium: var(--flare-bg-medium);
+    --background-light: var(--flare-bg-light);
+    --border-color: var(--flare-border-light);
+    --code-background: var(--flare-code-background);
+    --success-color: var(--flare-success-text); /* Text color for success */
+    --error-color: var(--flare-error-text);     /* Text color for error */
+    --warning-color: var(--flare-warning-text); /* Text color for warning */
+    --glow-primary: var(--flare-glow-primary);
+    --glow-secondary: var(--flare-glow-secondary);
+    --scrollbar-thumb: var(--flare-scrollbar-thumb);
+    --scrollbar-track: var(--flare-scrollbar-track);
+}
+
+/* --- Background Canvas --- */
+#nexus-background-canvas {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -10;
+    transition: opacity 0.5s ease;
+}
+body.synapse-flare-active #nexus-background-canvas { opacity: 0.15; filter: grayscale(50%); }
+
+/* --- Power's Dominance Level Indicator --- */
+#dominance-indicator-bar {
+    position: fixed; top: 0; left: 0; width: 0%; height: 6px;
+    background: linear-gradient(90deg, var(--theme-accent-primary), var(--theme-accent-secondary), var(--theme-accent-tertiary));
+    z-index: 2000; /* Above most things but below modals if any */
+    transition: width 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 0 12px var(--theme-glow-primary), 0 0 7px var(--theme-glow-secondary), 0 0 18px var(--theme-glow-tertiary), 0 0 3px #fff inset;
+}
+#dominance-level-text-container {
+    position: fixed; top: 8px; right: 10px; z-index: 2001;
+    font-family: var(--font-pixel);
+    font-size: 0.7rem;
+    color: var(--theme-text-primary);
+    background-color: color-mix(in srgb, var(--theme-bg-dark) 80%, transparent);
+    padding: 3px 8px;
+    border-radius: 3px;
+    text-shadow: 0 0 3px black;
+    letter-spacing: 1px;
+}
+#dominance-level-text { font-weight: bold; color: var(--theme-accent-tertiary); }
+body.synapse-flare-active #dominance-level-text-container { color: var(--theme-text-primary); background-color: color-mix(in srgb, var(--theme-bg-dark) 80%, transparent); }
+body.synapse-flare-active #dominance-level-text { color: var(--theme-accent-primary); }
+
+
+/* --- Desktop Area --- */
+#desktop {
+    flex-grow: 1; /* Takes up all space except taskbar */
+    position: relative;
+    overflow: hidden; /* Prevent icons/windows from causing scroll */
+    padding: 15px; /* Spacing for icons from edge */
+    display: flex; /* For arranging icons - could be grid or flex-wrap */
+    flex-wrap: wrap;
+    align-content: flex-start; /* Icons start from top-left */
+    gap: 15px; /* Spacing between icons */
+    background: transparent; /* Background is on body or canvas */
+}
+
+.desktop-icon {
+    width: 80px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    border-radius: 5px;
+    position: absolute; /* For JS positioning if needed, or rely on flex/grid */
+}
+.desktop-icon:hover {
+    background-color: color-mix(in srgb, var(--theme-primary-accent) 20%, transparent);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px var(--theme-glow-primary);
+}
+.desktop-icon img {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 5px;
+    pointer-events: none; /* So dblclick registers on parent */
+    filter: var(--theme-icon-filter); /* For light mode if icons are dark */
+    transition: transform 0.2s ease-out;
+}
+.desktop-icon:hover img {
+    animation: iconHoverGlitch 0.3s infinite alternate;
+}
+@keyframes iconHoverGlitch {
+    0% { transform: skewX(-2deg) skewY(1deg); }
+    50% { transform: skewX(2deg) skewY(-1deg) scale(1.05); }
+    100% { transform: skewX(-1deg) skewY(2deg); }
+}
+.desktop-icon span.icon-label {
+    font-size: 0.75rem;
+    color: var(--theme-text-primary);
+    word-wrap: break-word;
+    max-width: 100%;
+    line-height: 1.2;
+    text-shadow: 1px 1px 2px var(--theme-bg-dark); /* Make text readable on various backgrounds */
+}
+
+/* --- Taskbar --- */
+#taskbar {
+    height: 45px;
+    background-color: color-mix(in srgb, var(--theme-bg-titlebar) 90%, transparent);
+    border-top: 2px solid var(--theme-border-medium);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    z-index: 1500; /* Above desktop, below active window drag shield */
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+    transition: var(--transition-medium);
+    transition-property: background-color, border-top-color;
+}
+#start-button {
+    padding: 5px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid var(--theme-border-light);
+    margin-right: 10px;
+    transition: var(--transition-fast);
+}
+#start-button:hover {
+    background-color: var(--theme-accent-primary);
+}
+#start-button:hover #start-button-text { color: var(--theme-bg-dark); }
+#start-button:hover #start-button-icon { filter: brightness(0) invert(1); }
+
+#start-button-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    filter: var(--theme-icon-filter);
+}
+#start-button-text {
+    font-family: var(--font-pixel);
+    font-size: 0.9rem;
+    color: var(--theme-text-headings);
+    letter-spacing: 1px;
+}
+#running-apps-icons-container {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    overflow-x: auto; /* If many apps are open */
+}
+.taskbar-app-icon {
+    background-color: var(--theme-bg-window-alt);
+    border: 1px solid var(--theme-border-light);
+    padding: 4px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: var(--transition-fast);
+}
+.taskbar-app-icon:hover {
+    background-color: var(--theme-accent-secondary);
+    color: var(--theme-bg-dark);
+}
+.taskbar-app-icon.active-app {
+    background-color: var(--theme-accent-primary);
+    color: var(--theme-bg-dark);
+    font-weight: bold;
+    box-shadow: 0 0 8px var(--theme-glow-primary);
+}
+.taskbar-app-icon img { width: 16px; height: 16px; filter: var(--theme-icon-filter); }
+
+
+#system-tray {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-right: 5px;
+}
+#desktop-clock {
+    font-size: 0.85rem;
+    color: var(--theme-text-secondary);
+    font-variant-numeric: tabular-nums;
+}
+.tray-icon {
+    font-size: 1.5em; /* Make Yoda icon bigger */
+    color: var(--theme-tertiary-accent);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+.tray-icon:hover {
+    color: var(--theme-primary-accent);
+    transform: scale(1.2);
+    text-shadow: 0 0 10px var(--theme-glow-primary);
+}
+#rick-console-hijack-indicator {
+    font-size: 1.1em;
+    cursor: help;
+    opacity: 0.5;
+    transition: opacity 0.3s, color 0.3s;
+}
+#rick-console-hijack-indicator.active {
+    color: var(--theme-accent-secondary);
+    opacity: 1;
+    animation: rickPulse 1s infinite;
+}
+@keyframes rickPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+
+
+/* --- Start Menu --- */
+#start-menu {
+    position: fixed;
+    bottom: 45px; /* Height of taskbar */
+    left: 0;
+    width: 280px;
+    max-height: 400px; /* Limit height */
+    background-color: color-mix(in srgb, var(--theme-bg-window) 95%, transparent);
+    border: 1px solid var(--theme-border-medium);
+    border-bottom: none;
+    border-top-right-radius: 8px;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
+    z-index: 1400; /* Below taskbar but above desktop */
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(10px) saturate(120%);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+    transform: translateY(100%); /* Start hidden below */
+    opacity: 0;
+}
+#start-menu.visible {
+    transform: translateY(0%);
+    opacity: 1;
+}
+.start-menu-header {
+    padding: 12px 15px;
+    font-family: var(--font-pixel);
+    font-size: 1rem;
+    color: var(--theme-accent-primary);
+    border-bottom: 1px solid var(--theme-border-light);
+    text-align: center;
+    letter-spacing: 1px;
+}
+#start-menu-items, #start-menu-system-items {
+    list-style: none;
+    padding: 10px 0;
+    overflow-y: auto; /* Scroll if many items */
+    flex-grow: 1;
+}
+#start-menu-items li, #start-menu-system-items li {
+    padding: 0;
+}
+.start-menu-item-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 15px;
+    background: none;
+    border: none;
+    color: var(--theme-text-primary);
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+.start-menu-item-button img { width: 20px; height: 20px; filter: var(--theme-icon-filter); }
+.start-menu-item-button:hover {
+    background-color: var(--theme-accent-primary);
+    color: var(--theme-bg-dark);
+}
+.start-menu-item-button:hover img { filter: brightness(0) invert(1); }
+.start-menu-section-title {
+    padding: 8px 15px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--theme-text-secondary);
+    background-color: color-mix(in srgb, var(--theme-bg-window-alt) 50%, transparent);
+    border-top: 1px solid var(--theme-border-light);
+    border-bottom: 1px solid var(--theme-border-light);
+}
+.start-menu-footer {
+    padding: 10px;
+    border-top: 1px solid var(--theme-border-light);
+    display: flex;
+    justify-content: space-around;
+}
+.start-menu-footer .start-menu-button {
+    width: auto; /* Override full width */
+    border: 1px solid var(--theme-border-medium);
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+
+/* --- App Windows --- */
+.app-window {
+    position: absolute; /* JS will set top/left */
+    min-width: 350px;
+    min-height: 200px;
+    max-width: 90vw; /* Prevent windows from being too large */
+    max-height: 85vh;
+    background-color: var(--theme-bg-window);
+    border: 2px solid var(--theme-border-medium);
+    border-radius: 8px 8px 5px 5px; /* Slightly different top/bottom radius */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 0 1px var(--theme-border-light) inset;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Content scroll, not window itself */
+    z-index: 100; /* Base z-index, JS will manage active window */
+    transition: var(--transition-medium);
+    transition-property: opacity, transform, box-shadow, border-color;
+}
+.app-window.active-window {
+    border-color: var(--theme-accent-primary);
+    box-shadow: 0 0 25px var(--theme-glow-primary), 0 10px 40px rgba(0,0,0,0.6);
+    animation: activeWindowPulseBorder 1.5s infinite alternate;
+}
+@keyframes activeWindowPulseBorder {
+    0% { border-color: var(--theme-accent-primary); }
+    50% { border-color: var(--theme-accent-secondary); }
+    100% { border-color: var(--theme-accent-primary); }
+}
+.app-window.minimized { display: none !important; } /* Hide minimized windows */
+
+.window-title-bar {
+    background-color: var(--theme-bg-titlebar);
+    color: var(--theme-text-headings);
+    padding: 8px 12px;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--theme-border-light);
+    user-select: none;
+    font-family: var(--font-pixel);
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 0px color-mix(in srgb, var(--theme-bg-dark) 50%, black);
+    animation: scanlines 10s linear infinite; /* Subtle scanlines on titlebar */
+}
+@keyframes scanlines {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 50px; } /* Adjust 50px for scanline speed/density */
+}
+body.synapse-flare-active .window-title-bar { animation: none; }
+
+
+.window-title-bar .window-icon {
+    width: 18px; height: 18px; margin-right: 8px;
+    filter: var(--theme-icon-filter);
+}
+.window-title-bar .title-text {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.window-controls { display: flex; }
+.window-control-btn {
+    background: none; border: none; color: var(--theme-text-secondary);
+    font-family: var(--font-pixel); /* Make buttons more "blocky" */
+    font-size: 1.1rem; /* Adjust for pixel font visual size */
+    width: 28px; height: 28px; line-height: 28px; text-align: center;
+    cursor: pointer; margin-left: 5px; border-radius: 3px;
+    transition: var(--transition-fast);
+}
+.window-control-btn:hover { background-color: var(--theme-accent-secondary); color: var(--theme-bg-dark); }
+.window-control-btn.close:hover { background-color: var(--theme-error-color); color: white; }
+
+.window-content {
+    padding: 15px 20px;
+    flex-grow: 1;
+    overflow-y: auto; /* Enable scrolling for content */
+    overflow-x: hidden;
+    background-color: var(--theme-bg-window); /* Ensure content bg matches window */
+}
+.scrollable-content, .scrollable-pane {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 5px; /* Space for scrollbar */
+}
+
+.app-content-title {
+    font-family: var(--font-pixel);
+    color: var(--theme-accent-primary);
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 1px dashed var(--theme-border-medium);
+    padding-bottom: 10px;
+    letter-spacing: 1px;
+}
+.app-description {
+    font-size: 0.9rem;
+    color: var(--theme-text-secondary);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+.form-group { margin-bottom: 15px; }
+.form-group label, .modal-content label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--theme-text-secondary);
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+.tool-input, .modal-input { /* Shared class for inputs/textareas/selects in tools/modals */
+    background-color: var(--theme-bg-dark);
+    color: var(--theme-text-primary);
+    border: 1px solid var(--theme-border-medium);
+    border-radius: 6px;
+    padding: 12px;
+    font-family: var(--font-mono);
+    width: 100%;
+    font-size: 0.95em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.tool-input:focus, .modal-input:focus {
+    border-color: var(--theme-accent-primary);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--theme-accent-primary) 30%, transparent);
+    outline: none;
+}
+textarea.tool-input, textarea.modal-input { min-height: 80px; resize: vertical; }
+.code-display { white-space: pre-wrap; word-break: break-all; font-size: 0.85em; background-color: var(--code-background); padding: 10px; border-radius: 4px; border: 1px solid var(--theme-border-light); }
+.small-text-pgp { font-size: 0.75em; line-height: 1.3; }
+.instructions-text { font-size: 0.85em; color: var(--theme-text-secondary); margin-top: 10px; border-top: 1px dashed var(--theme-border-light); padding-top: 10px; }
+.instructions-text ol { margin-left: 20px; }
+
+.tool-output, .modal-output {
+    margin-top: 18px; padding: 15px; background-color: var(--code-background);
+    border-radius: 8px; min-height: 50px; font-size: 0.9rem;
+    color: var(--theme-text-primary); border: 1px dashed var(--theme-border-medium);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    max-height: 250px; overflow-y: auto; /* Scroll for long outputs */
+}
+.tool-output:not(:empty), .modal-output:not(:empty) { 
+    background-color: color-mix(in srgb, var(--code-background) 90%, black); 
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.4); 
+}
+.tool-output p, .modal-output p { margin-bottom: 8px; }
+.tool-output ul, .modal-output ul { list-style-type: none; padding-left: 0; }
+.tool-output li, .modal-output li { background-color: var(--theme-bg-light); padding: 8px 12px; border-radius: 4px; margin-bottom: 6px; border-left: 4px solid var(--theme-accent-primary); }
+.tool-output code.inline-code, .modal-output code.inline-code { background-color: var(--theme-bg-dark); padding: 2px 6px; border-radius: 3px; font-size: 0.9em; color: var(--theme-accent-secondary); cursor: pointer; }
+.tool-output code.inline-code:hover { background-color: var(--theme-accent-secondary); color: var(--theme-bg-dark); }
+
+
+.window-resize-handle {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 15px; height: 15px;
+    cursor: se-resize;
+    /* background: repeating-linear-gradient(45deg, transparent, transparent 3px, var(--theme-border-medium) 3px, var(--theme-border-medium) 6px); */
+    opacity: 0.5;
+}
+.window-resize-handle:hover { opacity: 1;}
+
+/* Specific App Styles */
+/* Edicts App */
+.edicts-cols { display: flex; gap: 15px; height: calc(100% - 50px); /* Adjust based on title height */ }
+#edicts-selection-pane { width: 35%; border-right: 1px solid var(--theme-border-light); padding-right:10px; }
+#edicts-selection-pane h4, #edict-viewer-pane h4 { font-family: var(--font-pixel); color: var(--theme-accent-secondary); font-size: 0.9rem; margin-bottom:10px; }
+#edicts-list { list-style: none; padding-left: 0; }
+#edicts-list li { padding: 6px 8px; cursor: pointer; border-radius: 3px; transition: var(--transition-fast); font-size: 0.85rem; }
+#edicts-list li:hover { background-color: var(--theme-accent-primary); color: var(--theme-bg-dark); }
+#edicts-list li.selected-edict { background-color: var(--theme-accent-secondary); color: var(--theme-bg-dark); font-weight: bold;}
+#edict-viewer-pane { flex-grow: 1; }
+#edict-viewer-content { white-space: pre-wrap; font-size: 0.9rem; line-height: 1.6; }
+
+/* Core Team App */
+.core-team-grid-app { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 12px; }
+.core-team-grid-app .team-member-app-icon { /* Different from desktop icons */
+    background-color: var(--theme-bg-window-alt); padding: 12px; text-align: center; border-radius: 6px;
+    border: 1px solid var(--theme-border-light); cursor: pointer; transition: var(--transition-fast); font-size: 0.9rem;
+}
+.core-team-grid-app .team-member-app-icon:hover { background-color: var(--theme-accent-primary); color: var(--theme-bg-dark); transform: scale(1.05); }
+.in-app-button { margin-top: 15px !important; }
+.small-text { font-size: 0.9em !important; padding: 10px 20px !important; }
+.small-text-pgp { font-size: 0.7rem !important; line-height: 1.2 !important; }
+
+/* --- Modals (General & Specific) --- */
+.modal-overlay {
+    display: none; /* Hidden by default, JS toggles to flex */
+    position: fixed; z-index: 2000; left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: color-mix(in srgb, var(--theme-bg-root) 90%, transparent);
+    backdrop-filter: blur(10px) brightness(0.5);
+    animation: fadeInModalOverlay 0.3s ease-out forwards;
+    align-items: center; justify-content: center;
+}
+.modal-overlay.hidden { display: none !important; } /* Force hide */
+.modal-overlay.visible { display: flex !important; } /* Force show */
+
+@keyframes fadeInModalOverlay { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-content { /* This is the base for specific modals now */
+    background-color: var(--theme-bg-window);
+    padding: 30px 35px;
+    border: 2px solid var(--theme-border-heavy);
+    width: 90%; max-width: 600px; /* Default max width */
+    border-radius: 12px;
+    box-shadow: 0 0 30px var(--theme-glow-primary), 0 0 15px var(--theme-glow-secondary);
+    position: relative;
+    animation: slideInModalContentBase 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    max-height: 80vh; /* Prevent modals from being too tall */
+    display: flex; flex-direction: column; /* For scrollable content area */
+}
+@keyframes slideInModalContentBase { from { transform: translateY(-50px) scale(0.9); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+
+.modal-content .window-title-bar { /* Re-use window title bar style for modals */
+    background-color: var(--theme-bg-titlebar); color: var(--theme-text-headings);
+    padding: 10px 15px; cursor: default; /* Modals not draggable by title usually */
+    display: flex; align-items: center; border-bottom: 1px solid var(--theme-border-light);
+    font-family: var(--font-pixel); font-size: 1rem; letter-spacing: 0.5px;
+    border-top-left-radius: 10px; border-top-right-radius: 10px; /* Match modal radius */
+    margin: -30px -35px 20px -35px; /* Pull out to edges, add bottom margin */
+}
+.modal-content .window-title-bar .title-text { flex-grow: 1; }
+.modal-content .window-title-bar .close-button { /* Style the close button for modals */
+    background: none; border: none; color: var(--theme-text-secondary);
+    font-family: var(--font-pixel); font-size: 1.2rem; width: 30px; height: 30px;
+    line-height: 30px; text-align: center; cursor: pointer;
+    transition: var(--transition-fast);
+}
+.modal-content .window-title-bar .close-button:hover { background-color: var(--theme-error-color); color: white; transform: rotate(90deg); }
+
+.modal-content .modal-body-content { /* For content area within modal that might scroll */
+    overflow-y: auto;
+    padding-right: 10px; /* Space for scrollbar */
+}
+
+.modal-content h4 { /* Specific for modal titles if not using title bar */
+    font-family: var(--font-pixel); color: var(--theme-accent-primary);
+    margin-bottom: 20px; font-size: 1.5em; text-shadow: 0 0 5px var(--theme-glow-primary);
+}
+.modal-checklist label { display: flex; align-items: center; margin-bottom: 12px; cursor: pointer; font-size: 0.95em;}
+.modal-checklist input[type="checkbox"] { margin-right: 12px; width: 18px; height: 18px; accent-color: var(--theme-accent-primary); filter: drop-shadow(0 0 3px var(--theme-glow-primary));}
+.modal-text-output { font-size: 1.1em; line-height: 1.8; color: var(--theme-text-primary); }
+
+/* Specific Modals - reusing .tool-input, .tool-output, .nexus-button */
+/* Yoda's Wisdom Modal */
+#yodaWisdomModal .modal-content { max-width: 500px; text-align: center;}
+#yodaQuoteContent { font-family: var(--font-mono); font-size: 1.2em !important; color: var(--theme-accent-tertiary) !important; line-height: 1.7 !important; min-height: 60px; font-style: italic; }
+
+/* Power Map App Specifics */
+#powerMapContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width:100%; height:280px;
+    background:var(--code-background);
+    border:1px solid var(--border-color);
+    padding:10px;
+}
+.map-region-power {
+    background:var(--theme-bg-light); color:var(--theme-text-primary);
+    border:1px solid var(--theme-border-medium); border-radius:5px;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center; font-size:0.9em; cursor:pointer;
+    transition: var(--transition-fast);
+}
+.map-region-power:hover {
+    background:var(--theme-accent-secondary); color:var(--theme-bg-dark);
+    transform:scale(1.05);
+}
+
+
+/* Konami Code Easter Egg Canvas Style */
+.konami-hidden { display: none !important; opacity: 0 !important; pointer-events: none !important; }
+#konami-canvas-overlay {
+    position:fixed; top:0; left:0; width:100vw; height:100vh; 
+    background: color-mix(in srgb, var(--theme-bg-root) 95%, black); 
+    z-index:9999; 
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.5s ease-out; pointer-events: none;
+}
+#konami-canvas-overlay.visible { opacity: 1; pointer-events: auto; }
+
+#konami-art-output {
+    color:var(--theme-accent-primary); font-size: clamp(3px, 1.2vw, 8px); line-height:0.8;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre; display: inline-block; text-align: left;
+    border: 3px dashed var(--theme-accent-secondary); padding: 15px;
+    background-color: color-mix(in srgb, var(--theme-code-background) 80%, transparent);
+    box-shadow: 0 0 30px var(--theme-glow-secondary), 0 0 15px var(--theme-glow-primary) inset;
+    max-width: 95vw; max-height: 70vh; overflow: auto;
+    border-radius: 5px;
+}
+#konami-message-output { color:var(--theme-accent-tertiary); margin-top:20px; font-size:1.4em; font-family: var(--font-pixel); text-shadow: 0 0 10px var(--theme-glow-tertiary);}
+#close-konami-overlay-btn { margin-top: 25px; }
+
+
+/* General Modal for Rick's BSOD etc. */
+#generalModalOverlay .modal-content { /* Already styled by .modal-content */
+    /* Specifics for general modal if needed */
+    padding: 0; /* Remove padding if content has its own, like BSOD */
+}
+.bsod-screen { /* For Rick's BSOD */
+    background-color: #0000AA; /* Classic BSOD blue */
+    color: #FFFFFF;
+    font-family: 'PerfectDOSVGA', 'Fixedsys', monospace; /* Retro VGA font */
+    padding: 20px;
+    width: 100%; height: 100%; /* Fill the modal */
+    display: flex; flex-direction: column; justify-content: center; text-align: center;
+    font-size: 1.5rem; /* Larger for BSOD text */
+    line-height: 1.8;
+    border-radius: 10px; /* Match modal content radius */
+}
+.bsod-screen h2 { color: var(--theme-accent-warning); font-family: inherit; margin-bottom: 20px; }
+.bsod-screen p { margin-bottom: 15px; }
+.bsod-screen .error-code { font-size: 1.2em; color: var(--theme-accent-tertiary); }
+
+
+/* Custom Right-Click Context Menu */
+#desktop-context-menu {
+    position: fixed; /* Important: fixed position */
+    z-index: 3000;   /* Above everything else */
+    background-color: var(--theme-bg-window-alt);
+    border: 1px solid var(--theme-border-heavy);
+    border-radius: 6px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    padding: 5px 0;
+    min-width: 200px;
+    transition: opacity 0.1s ease-out, transform 0.1s ease-out;
+    transform: scale(0.95); opacity: 0;
+}
+#desktop-context-menu.visible {
+    transform: scale(1); opacity: 1;
+}
+#desktop-context-menu ul { list-style: none; padding: 0; margin: 0; }
+#desktop-context-menu li {
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--theme-text-primary);
+    transition: var(--transition-fast);
+}
+#desktop-context-menu li:hover {
+    background-color: var(--theme-accent-primary);
+    color: var(--theme-bg-dark);
+}
+#desktop-context-menu hr {
+    border: none;
+    height: 1px;
+    background-color: var(--theme-border-light);
+    margin: 5px 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    #logo h1 { font-size: 1.5em; }
+    #taskbar { height: 40px; padding: 0 5px;}
+    #start-button { padding: 3px 5px;}
+    #start-button-icon { width:20px; height:20px; margin-right:5px;}
+    #start-button-text { font-size: 0.8rem;}
+    #desktop-clock { font-size:0.75rem; }
+    .tray-icon { font-size: 1.3em;}
+    #start-menu { width: 250px; bottom: 40px; max-height: 350px;}
+    .start-menu-item-button { padding: 8px 12px; font-size: 0.85rem;}
+    
+    #desktop { padding: 10px; gap: 10px; }
+    .desktop-icon { width: 70px; height: 90px; }
+    .desktop-icon img { width: 40px; height: 40px; }
+    .desktop-icon span.icon-label { font-size: 0.7rem; }
+
+    #hero h2 { font-size: 2.2em; }
+    .section-title { font-size: 2em; margin-bottom: 40px;}
+    .section-title::before { width: 80px; margin-top:10px; }
+    .app-content-title { font-size: 1.1rem; }
+
+    .app-window { min-width: 90vw; min-height: 70vh; width: 90vw; height: auto; max-height: 75vh; }
+    .window-title-bar { padding: 6px 10px; font-size: 0.8rem; }
+    .window-title-bar .window-icon { width:16px; height:16px; margin-right:6px;}
+    .window-control-btn { width:24px; height:24px; line-height:24px; font-size:1rem;}
+    .window-content { padding: 12px 15px; }
+    
+    .modal-content { width: 95%; margin: 10% auto; padding: 25px; }
+    #interactive-tools .tools-grid { grid-template-columns: 1fr; gap: 25px; }
+    .tool-card { padding: 20px; }
+    .tool-card h4 { font-size: 1.3em; }
+
+    .core-team-grid-app { grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); }
+    .core-team-grid-app .team-member-app-icon { font-size: 0.85rem; padding: 10px;}
+
+    #konami-art-output { font-size: clamp(2px, 1vw, 6px); padding: 10px;}
+    #konami-message-output { font-size: 1.1em;}
+}

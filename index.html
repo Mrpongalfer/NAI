@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NexusOS v2.7 :: Architect Alix Feronti :: Rebel Glitch Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Roboto+Mono:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/icons/nexus_favicon.ico" type="image/x-icon">
+</head>
+<body id="nexus-body">
+    <canvas id="nexus-background-canvas"></canvas>
+
+    <div id="dominance-indicator-bar">
+        <div id="dominance-level-text-container">
+            <span>NEXUS DOMINANCE LEVEL: </span><span id="dominance-level-text">CALIBRATING...</span>
+        </div>
+    </div>
+
+    <div id="desktop">
+        </div>
+
+    <div id="taskbar">
+        <div id="start-button" title="NexusOS Main Menu">
+            <img src="assets/icons/nexus_logo_start_icon.svg" alt="Nexus Start" id="start-button-icon">
+            <span id="start-button-text">NEXUS</span>
+        </div>
+        <div id="running-apps-icons-container">
+            </div>
+        <div id="system-tray">
+            <div id="rick-console-hijack-indicator" title="Rick's Console Hijack Status: Dormant">🎮</div>
+            <span id="desktop-clock">00:00:00</span>
+            <span id="yoda-wisdom-tray-icon" class="tray-icon" title="Yoda's TPC Principle Reminder">💡</span>
+        </div>
+    </div>
+
+    <div id="start-menu" class="hidden">
+        <div class="start-menu-header">NexusOS v2.7 :: Rebel Glitch</div>
+        <ul id="start-menu-items">
+            </ul>
+        <div class="start-menu-section-title">System Controls</div>
+        <ul id="start-menu-system-items">
+             <li><button class="start-menu-item-button" id="themeToggleBtnSM">Toggle Synapse Flare</button></li>
+             <li><button class="start-menu-item-button" id="settingsAppBtnSM" data-app-id="settingsApp">NexusOS Settings</button></li>
+             <li><button class="start-menu-item-button" id="shutdownBtnSM" title="Conceptual Shutdown">Shutdown NexusOS</button></li>
+        </ul>
+    </div>
+
+    <div id="window-templates" style="display: none;">
+        <div class="app-window" id="template-window-generic"> <div class="window-title-bar">
+                <img src="assets/icons/default_app_icon.svg" class="window-icon" alt="App Icon">
+                <span class="title-text">Application Title</span>
+                <div class="window-controls">
+                    <button class="window-control-btn minimize" title="Minimize">_</button>
+                    <button class="window-control-btn maximize" title="Maximize">□</button>
+                    <button class="window-control-btn close" title="Close>×</button>
+                </div>
+            </div>
+            <div class="window-content scrollable-content">
+                </div>
+            <div class="window-resize-handle"></div>
+        </div>
+
+        <div id="edictsApp-content">
+            <h3 class="app-content-title">Nexus Edicts & Protocols Archive</h3>
+            <div class="edicts-cols">
+                <div id="edicts-selection-pane" class="scrollable-pane">
+                    <h4>Select Edict/Protocol:</h4>
+                    <ul id="edicts-list"> </ul>
+                </div>
+                <div id="edict-viewer-pane" class="scrollable-pane">
+                    <h4 id="edict-viewer-title">Content Viewer</h4>
+                    <pre id="edict-viewer-content" class="code-display">Select an item from the list to view its content.</pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="forgeApp-content">
+            <h3 class="app-content-title">The Forge: Manifested Works & Tools</h3>
+            <div id="forge-project-list" class="scrollable-content project-showcase">
+                </div>
+            <div class="app-action-bar">
+                <button id="launchStarkAnalyzerBtnForge" class="nexus-button in-app-button small-text">Analyze New Project Idea (Stark)</button>
+            </div>
+        </div>
+        
+        <div id="coreTeamApp-content">
+            <h3 class="app-content-title">Nexus Core Simulation Interface</h3>
+            <p class="app-description">The Omnitide Nexus leverages a simulated Core Team for multi-perspective analysis, brainstorming, and validation. Each member brings unique expertise. Click an icon for a simulated interaction or tool.</p>
+            <div class="core-team-grid-app">
+                </div>
+            <div id="core-team-app-output" class="tool-output" style="margin-top:15px; min-height: 60px;">Select a Core Team member to engage their specialized module.</div>
+        </div>
+
+        <div id="secureChannelApp-content">
+            <h3 class="app-content-title">Secure Channel αLpHå: PGP Transmission Protocol</h3>
+            <p class="app-description">Encrypt a message for Architect Alix Feronti using OpenPGP.js (v5.11.1).</p>
+            <div class="form-group">
+                <label for="secureMessageInputPgp">Your Plaintext Message:</label>
+                <textarea id="secureMessageInputPgp" class="tool-input" rows="6" placeholder="Compose your sensitive information here..."></textarea>
+            </div>
+            <div class="form-group pgp-key-area">
+                <label>Architect's Public PGP Key (for encryption - Key ID: FD82...DD1A):</label>
+                <textarea id="architectPgpKeyDisplay" class="tool-input code-display small-text-pgp" rows="8" readonly title="This is the Architect's PGP Public Key. Click to select all."></textarea>
+            </div>
+            <button id="encryptPgpMessageBtn" class="nexus-button in-app-button">Prepare Secure PGP Block</button>
+            <div class="form-group" style="margin-top:15px;">
+                <label for="pgpEncryptedOutput">Encrypted PGP Message Block (Copy this entire block):</label>
+                <textarea id="pgpEncryptedOutput" class="tool-input code-display small-text-pgp" rows="10" readonly placeholder="-----BEGIN PGP MESSAGE----- ..."></textarea>
+            </div>
+            <div id="pgpInstructions" class="instructions-text">
+                <p><strong>Transmission Protocol:</strong></p>
+                <ol>
+                    <li>Click "Prepare Secure PGP Block" above.</li>
+                    <li>Copy the ENTIRE PGP message block from the field above (including "-----BEGIN..." and "-----END..." lines).</li>
+                    <li>Paste this block into an email and send it from YOUR OWN email client to: <strong>pongalfer@gmail.com</strong></li>
+                    <li>Use a clear subject line, e.g., "NEXUS_PGP_SECURE_COMM_ENCRYPTED :: SIGIL <span id="pgp-sigil"></span>"</li>
+                </ol>
+            </div>
+        </div>
+
+        <div id="terminalApp-content">
+            <div id="terminal-output" class="scrollable-content code-display">
+                </div>
+            <div id="terminal-input-line">
+                <span id="terminal-prompt">architect@NexusOS:~$</span>
+                <input type="text" id="terminal-input" spellcheck="false" autocomplete="off">
+            </div>
+        </div>
+        
+        <div id="rickToolApp-content">
+            <h3 class="app-content-title">Rick's De-BS-ifier C-137</h3>
+             <p class="app-description">Feed me your corporate propaganda or techbro nonsense. I'll tell you what it *really* means. Or I'll just insult you. *Buurp*.</p>
+            <textarea id="rickToolInput" class="tool-input" rows="6" placeholder="e.g., 'We are leveraging AI-powered synergistic paradigm shifts to disrupt the digital transformation landscape...'"></textarea>
+            <button id="rickToolBtn" class="nexus-button small-text in-app-button">De-BS-ify It, Meatbag!</button>
+            <div id="rickToolOutput" class="tool-output modal-output"><p>Awaiting prime BS...</p></div>
+        </div>
+        
+        <div id="rocketToolApp-content">
+            <h3 class="app-content-title">Rocket's Scrapyard Scavenger™</h3>
+            <p class="app-description">Got a problem, need a quick 'n dirty tool? I've got parts lyin' around. Just tell me what kinda mess you're in.</p>
+            <select id="rocketToolProblemSelect" class="tool-input">
+                <option value="">-- What Broke This Time? --</option>
+                <option value="webserver">Quick Local Web Server (Basic)</option>
+                <option value="jsonparse">CLI JSON Mangler (For Data Guts)</option>
+                <option value="sysmon">Basic System Vitals (CLI)</option>
+                <option value="filefind">File Hunter (Advanced Sniffing)</option>
+                <option value="imgmanip">Image Quick-Fix (Resize/Convert)</option>
+                <option value="logcrunch">Basic Log Grepper (Needle in Haystack)</option>
+            </select>
+            <button id="rocketToolBtn" class="nexus-button small-text in-app-button">Scavenge Tools!</button>
+            <div id="rocketToolOutput" class="tool-output modal-output"><p>Rocket's workshop is ready for your disaster!</p></div>
+        </div>
+
+        <div id="momoToolApp-content">
+            <h3 class="app-content-title">Momo's Practical Dev Time Estimator</h3>
+            <p class="app-description">Let's figure out a realistic timeline for your tasks, Architect! No magic, just practical estimation.</p>
+            <div class="form-group">
+                <label for="momoToolTasks">Number of distinct development tasks (1-50):</label>
+                <input type="number" id="momoToolTasks" class="tool-input" placeholder="e.g., 5" min="1" max="50">
+            </div>
+            <div class="form-group">
+                <label for="momoToolComplexity">Average Task Complexity:</label>
+                <select id="momoToolComplexity" class="tool-input">
+                    <option value="trivial">Trivial (e.g., Tiny CSS fix, label change)</option>
+                    <option value="low">Low (e.g., Simple UI tweak, small bug fix)</option>
+                    <option value="medium" selected>Medium (e.g., Standard feature, new API endpoint)</option>
+                    <option value="high">High (e.g., New core module, complex algorithm)</option>
+                    <option value="research">Research Spike (e.g., Investigating new tech)</option>
+                </select>
+            </div>
+            <button id="momoToolBtn" class="nexus-button small-text in-app-button">Estimate Dev Hours!</button>
+            <div id="momoToolOutput" class="tool-output modal-output"><p>Ready when you are, Architect!</p></div>
+        </div>
+
+         <div id="starkAnalyzerApp-content">
+            <h3 class="app-content-title">Stark Industries® Project Feasibility Matrix v7.2</h3>
+             <p class="app-description">Alright, genius. Lay your "next big thing" on me. J.A.R.V.I.S. and I will give it the once-over. Try to impress us.</p>
+            <label for="starkAppProjectIdeaInput" class="form-label">Project Concept Outline:</label>
+            <textarea id="starkAppProjectIdeaInput" class="tool-input modal-input" rows="5" placeholder="e.g., 'Globally-distributed, AI-driven, self-assembling nanite coffee maker that also predicts stock market fluctuations based on caffeine consumption patterns.'"></textarea>
+            <button id="starkAppAnalyzeBtn" class="nexus-button modal-button">Engage Stark Analyzer</button>
+            <div id="starkAppAnalysisResultOutput" class="tool-output modal-output">Awaiting project parameters...</div>
+        </div>
+
+        <div id="lucyThreatApp-content">
+            <h3 class="app-content-title">Kushinada Corp: Threat Vector Analysis</h3>
+            <p class="app-description">Identify potential vulnerabilities. Choose a system component for a preliminary threat assessment. Stay sharp.</p>
+            <label for="lucyAppSystemComponentSelect" class="form-label">Target System Component:</label>
+            <select id="lucyAppSystemComponentSelect" class="tool-input modal-input">
+                <option value="api">Public API Gateway / Endpoints</option>
+                <option value="database">Primary Data Store (SQL/NoSQL)</option>
+                <option value="auth_service">User Authentication & Authorization Service</option>
+                <option value="frontend_app">Web Frontend Application (Client-Side)</option>
+                <option value="internal_services">Internal Network Microservices</option>
+                <option value="llm_integration_points">LLM Integration & Prompt Handling</option>
+                <option value="ci_cd_pipeline_infra">CI/CD Automation Pipeline & Infrastructure</option>
+                <option value="third_party_api_usage">Third-Party API/Service Integrations</option>
+                <option value="data_backup_storage">Data Backup & Offsite Storage</option>
+            </select>
+            <button id="lucyAppIdentifyBtn" class="nexus-button modal-button">Scan for Vectors</button>
+            <div id="lucyAppThreatResultOutput" class="tool-output modal-output">Awaiting component selection...</div>
+        </div>
+        
+        <div id="makimaAlignmentApp-content">
+            <h3 class="app-content-title">Makima: Nexus Strategic Alignment Protocol</h3>
+            <p class="app-description">This assessment protocol evaluates a project's congruence with overarching Nexus Edicts and strategic objectives. Control through alignment is paramount.</p>
+            <div id="makimaAppChecklist" class="modal-checklist scrollable-content" style="max-height: 200px;">
+                <label><input type="checkbox" name="makimaAlignmentPrinciple" value="TPC"> Project directly embodies or produces True Prime Code artifacts?</label>
+                <label><input type="checkbox" name="makimaAlignmentPrinciple" value="Automation"> Project significantly enhances or relies on advanced, resilient automation?</label>
+                <label><input type="checkbox" name="makimaAlignmentPrinciple" value="Innovation"> Project introduces unconventional excellence or pioneers novel paradigms?</label>
+                <label><input type="checkbox" name="makimaAlignmentPrinciple" value="Security"> Project integrates security by design as a non-negotiable, foundational core tenet?</label>
+                <label><input type="checkbox" name="makimaAlignmentPrinciple" value="Control"> Project demonstrably enhances the Architect's control, insight, or operational sovereignty over systems?</label>
+                <label><input type="checkbox" name="makimaAlignmentPrinciple" value="Efficiency"> Project measurably optimizes resource usage (compute, time, cognitive load) for the Architect or Nexus?</label>
+                <label><input type="checkbox" name="makimaAlignmentPrinciple" value="Evolution"> Project is designed for adaptability, recursive self-improvement, and co-adaptive transcendence within the Nexus framework?</label>
+                <label><input type="checkbox" name="makimaAlignmentPrinciple" value="OmniTool"> Project leverages existing Nexus tools (Ex-Work, Scribe, PAC, etc.) where appropriate, fostering synergy?</label>
+            </div>
+            <button id="makimaAppAssessBtn" class="nexus-button modal-button">Assess Strategic Alignment</button>
+            <div id="makimaAppAlignmentResultOutput" class="tool-output modal-output">Awaiting project principle evaluation...</div>
+        </div>
+
+        <div id="yodaWisdomApp-content">
+            <h3 class="app-content-title">Yoda's Chamber of TPC Contemplation</h3>
+            <div id="yodaAppQuoteContent" class="modal-text-output" style="font-size:1.3em; text-align:center; min-height: 70px; padding:10px;"></div>
+            <button id="yodaAppAnotherQuoteBtn" class="nexus-button small-text in-app-button" style="display:block; margin:20px auto 0;">Another path, show me</button>
+        </div>
+
+        <div id="settingsApp-content">
+            <h3 class="app-content-title">NexusOS Customization Matrix (Harley Was Here!)</h3>
+            <div class="form-group">
+                <label for="wallpaperSelectHarleyApp">"Live Wallpaper" Particle Theme:</label>
+                <select id="wallpaperSelectHarleyApp" class="tool-input">
+                    <option value="matrix_glitch">Matrix Glitch Stream</option>
+                    <option value="circuit_burn">Circuit Burnout</option>
+                    <option value="static_void">Static Void (Minimal)</option>
+                    <option value="acid_trip_city">Acid Trip Cityscape</option>
+                    <option value="disco_inferno">GLITTER BOMB DISCO!</option>
+                    <option value="default_particles">Nexus Default Particles</option>
+                </select>
+            </div>
+             <div class="form-group">
+                <label for="rickConsoleToggle">Rick's Console Commentary™:</label>
+                <button id="rickConsoleToggleBtn" class="nexus-button small-text" data-enabled="false">Enable Judgement</button>
+            </div>
+            <div class="form-group">
+                <label for="lucyParanoidToggle">Lucy's Hyper-Paranoid Mode™:</label>
+                <button id="lucyParanoidToggleBtn" class="nexus-button small-text" data-enabled="false">Activate Scans</button>
+            </div>
+            <p style="font-size:0.9em; text-align:center; margin-top:20px;">More "features" coming soon, puddin'! Or are they already here? Hehehe!</p>
+        </div>
+        
+        <div id="powerMapApp-content">
+            <h3 class="app-content-title">POWER'S UNCONTESTED GLOBAL DOMINANCE MAP!</h3>
+            <p class="app-description" style="text-align:center;">BEHOLD! Click any region to witness POWER'S ABSOLUTE INFLUENCE!</p>
+            <div id="powerMapContainer">
+                <div class="map-region-power" data-region="North America">North America</div>
+                <div class="map-region-power" data-region="South America">South America</div>
+                <div class="map-region-power" data-region="Europe">Europe</div>
+                <div class="map-region-power" data-region="Africa">Africa</div>
+                <div class="map-region-power" data-region="Asia">Asia</div>
+                <div class="map-region-power" data-region="Oceania">Oceania</div>
+                <div class="map-region-power" data-region="Antarctica" style="grid-column: span 2;">Antarctica (Even Penguins Fear POWER!)</div>
+                <div class="map-region-power" data-region="THE MOON" style="grid-column: span 1; background-color:var(--tertiary-accent); color:var(--background-dark); font-weight:bold;">THE MOON!</div>
+            </div>
+            <div id="powerMapOutput" class="tool-output modal-output" style="margin-top:15px;">Click a region! FEEL THE MIGHT!</div>
+        </div>
+        
+        <div id="fakeErrorApp-content">
+            <h3 class="app-content-title" style="color:var(--error-color);">CRITICAL SYSTEM FAILURE LOG</h3>
+            <div id="fakeErrorLogOutput" class="scrollable-content code-display" style="height:200px; background-color: #03000a;">
+                </div>
+            <div style="text-align:center; margin-top:10px;">
+                <button id="reportErrorToDevsBtn" class="nexus-button small-text" style="background-color:var(--warning-color);">Report These "Critical" Errors</button>
+                <button id="forceQuitErrorAppBtn" class="nexus-button small-text" style="background-color:var(--error-color); display:none;">Force Quit (No, Really!)</button>
+            </div>
+        </div>
+
+        <div id="placeholderApp-content">
+            <h3 class="app-content-title">Generic Application Window</h3>
+            <p>This is a placeholder for future NexusOS applications.</p>
+            <p>Content generation is a function of the Omnitide Forge, awaiting Architect's directive.</p>
+        </div>
+
+
+    </div> <div id="generalModalOverlay" class="modal-overlay hidden">
+        <div class="modal-content general-modal-content" id="generalModalMainContent">
+            </div>
+    </div>
+
+    <div id="konami-canvas-overlay" class="konami-hidden">
+        <pre id="konami-art-output"></pre>
+        <p id="konami-message-output">Protocol: Jester's Gambit ENGAGED! Prepare for... fun?</p>
+        <button id="close-konami-overlay-btn" class="nexus-button small-text">Alright, Harley, calm down...</button>
+    </div>
+    
+    <div id="desktop-context-menu" class="custom-context-menu hidden">
+        <ul>
+            <li data-action="new-terminal">Open New NexusTerm</li>
+            <li data-action="change-wallpaper">Change Wallpaper (Settings)</li>
+            <li data-action="toggle-flare">Toggle Synapse Flare</li>
+            <hr>
+            <li data-action="system-info">NexusOS Info (Conceptual)</li>
+        </ul>
+    </div>
+
+
+    <script src="js/lib/openpgp.min.js"></script> 
+    <script src="script.js"></script>
+</body>
+</html>
